@@ -47,7 +47,7 @@ on:
 jobs:
   validate-data:
     name: ✅ Validate
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - name: Parámetros de entrada
       env:
