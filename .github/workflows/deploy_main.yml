@@ -12,6 +12,7 @@ on:
 
 jobs:
   do-it:
+    name: 🎉 Do it
     runs-on: ubuntu-latest
 
     steps:
@@ -31,6 +32,7 @@ jobs:
           echo $SECRET_PARAMS_ENTERED
 
   docker:
+    name: 🎉 Docker
     needs: do-it
     uses: ./.github/workflows/deploy_reusable.yml
     with:
