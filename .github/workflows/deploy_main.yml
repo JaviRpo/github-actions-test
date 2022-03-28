@@ -21,7 +21,7 @@ jobs:
         run: echo Hello, world!
 
   docker:
-    uses: JaviRpo/github-actions-test/.github/workflows/deploy_reusable.yml@main
+    uses: .github/workflows/deploy_reusable.yml@main
     with:
       image_name: ${{ github.event.inputs.app-name }}
       tag: $GITHUB_RUN_NUMBER
