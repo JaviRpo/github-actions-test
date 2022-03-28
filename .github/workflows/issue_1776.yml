@@ -50,6 +50,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Parámetros de entrada
-      env:
-        PARAMS_ENTERED: ${{ toJSON(github.event.inputs) }}
-      run: echo $PARAMS_ENTERED
+      run: echo ${{ toJSON(github.event.inputs) }}
