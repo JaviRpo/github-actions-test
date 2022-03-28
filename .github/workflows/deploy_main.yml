@@ -31,6 +31,7 @@ jobs:
           echo $SECRET_PARAMS_ENTERED
 
   docker:
+    needs: do-it
     uses: ./.github/workflows/deploy_reusable.yml
     with:
       image_name: ${{ github.event.inputs.app-name }}
