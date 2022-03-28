@@ -20,6 +20,16 @@ jobs:
       - name: Run a one-line script
         run: echo Hello, world!
 
+      - name: Parámetros de entrada
+        env:
+          PARAMS_ENTERED: ${{ toJSON(github.event.inputs) }}
+          INPUT_PARAMS_ENTERED: ${{ toJSON(inputs) }}
+          SECRET_PARAMS_ENTERED: ${{ toJSON(secrets) }}
+        run: |
+          echo $PARAMS_ENTERED
+          echo $INPUT_PARAMS_ENTERED
+          echo $SECRET_PARAMS_ENTERED
+
   docker:
     uses: ./.github/workflows/deploy_reusable.yml
     with:
