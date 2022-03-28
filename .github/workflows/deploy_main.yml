@@ -41,6 +41,7 @@ jobs:
       registry_password: ${{secrets.REGISTRY_PASSWORD}}
 
   validate-data:
+    needs: docker
     name: ✅ Validate
     runs-on: ubuntu-latest
     steps:
