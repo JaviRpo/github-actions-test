@@ -42,6 +42,17 @@ jobs:
       registry_username: ${{secrets.REGISTRY_USERNAME}}
       registry_password: ${{secrets.REGISTRY_PASSWORD}}
 
+  docker2:
+    name: 🎉 Docker2
+    needs: do-it
+    uses: ./.github/actions/deploy-one/action.yml
+    with:
+      image_name: ${{ github.event.inputs.app-name }}
+      tag: $GITHUB_RUN_NUMBER
+    secrets:
+      registry_username: ${{secrets.REGISTRY_USERNAME}}
+      registry_password: ${{secrets.REGISTRY_PASSWORD}}
+
   validate-data:
     needs: docker
     name: ✅ Validate
