@@ -1,0 +1,45 @@
+name: Bin Grep File
+
+on:
+  workflow_dispatch:
+    inputs:
+      file-name:
+        type: string
+
+defaults:
+  run:
+    shell: sh
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v2
+
+    - name: 👀 Check Update DB
+      id: check-update-db
+      run: |
+        echo "::set-output name=EMPTY_FILE::0"
+        echo "set variable 0"
+        grep -nw migration-${{ github.event.inputs.file-name }}.html -e 'Error' > migration-${{ github.event.inputs.file-name }}-error.txt
+        echo "grep done"
+        [ -s migration-${{ github.event.inputs.file-name }}-error.txt ]
+        echo "::set-output name=EMPTY_FILE::$( echo $? )"
+        echo "-s command"
+        [ -s migration-${{ github.event.inputs.file-name }}-error.txt ]
+        echo "Check result '${{ steps.check-update-db.outputs.EMPTY_FILE }}'-'$?' --> 0 empty, 1 not empty"
+        echo "-s command"
+        echo "::set-output name=EMPTY_FILE::1"
+
+    - name: 💾 Archive Test Results
+      uses: actions/upload-artifact@v2
+      with:
+        name: deploy-results
+        path: |
+          migration-${{ github.event.inputs.file-name }}.html
+          migration-${{ github.event.inputs.file-name }}-error.txt
+
+    - name: 👀 Fail if DB Update has Errors
+      if: steps.check-update-db.outputs.EMPTY_FILE == 1
+      run: exit 1
