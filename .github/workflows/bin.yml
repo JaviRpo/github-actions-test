@@ -43,5 +43,5 @@ jobs:
           migration-${{ github.event.inputs.file-name }}-error.txt
 
     - name: 👀 Fail if DB Update has Errors
-      if: steps.check-update-db.outputs.EMPTY_FILE == 'true'
+      if: steps.check-update-db.outputs.EMPTY_FILE == 'false'
       run: exit 1
