@@ -25,13 +25,14 @@ jobs:
         echo "set variable 0"
         grep -nw migration-${{ github.event.inputs.file-name }}.html -e 'Error' > migration-${{ github.event.inputs.file-name }}-error.txt || touch migration-${{ github.event.inputs.file-name }}-error.txt
         echo "grep done"
-        [ -s migration-${{ github.event.inputs.file-name }}-error.txt ]
-        echo "::set-output name=EMPTY_FILE::$( echo $? )"
+        if [ -s migration-${{ github.event.inputs.file-name }}-error.txt ]; then
+            empty=false
+        else
+            empty=true
+        fi
         echo "-s command"
-        [ -s migration-${{ github.event.inputs.file-name }}-error.txt ]
-        echo "Check result '${{ steps.check-update-db.outputs.EMPTY_FILE }}'-'$?' --> 0 empty, 1 not empty"
-        echo "-s command"
-        echo "::set-output name=EMPTY_FILE::1"
+        echo "::set-output name=EMPTY_FILE::$( echo $empty )"
+        echo "set-output"
 
     - name: 💾 Archive Test Results
       uses: actions/upload-artifact@v2
@@ -42,5 +43,5 @@ jobs:
           migration-${{ github.event.inputs.file-name }}-error.txt
 
     - name: 👀 Fail if DB Update has Errors
-      if: steps.check-update-db.outputs.EMPTY_FILE == 1
+      if: steps.check-update-db.outputs.EMPTY_FILE == 'true'
       run: exit 1
