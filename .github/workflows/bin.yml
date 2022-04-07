@@ -19,6 +19,7 @@ jobs:
 
     - name: 👀 Check Update DB
       id: check-update-db
+      shell: sh
       run: |
         echo "::set-output name=EMPTY_FILE::0"
         echo "set variable 0"
