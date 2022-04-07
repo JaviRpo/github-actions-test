@@ -23,7 +23,7 @@ jobs:
       run: |
         echo "::set-output name=EMPTY_FILE::0"
         echo "set variable 0"
-        grep -nw migration-${{ github.event.inputs.file-name }}.html -e 'Error' > migration-${{ github.event.inputs.file-name }}-error.txt
+        grep -nw migration-${{ github.event.inputs.file-name }}.html -e 'Error' > migration-${{ github.event.inputs.file-name }}-error.txt || touch migration-${{ github.event.inputs.file-name }}-error.txt
         echo "grep done"
         [ -s migration-${{ github.event.inputs.file-name }}-error.txt ]
         echo "::set-output name=EMPTY_FILE::$( echo $? )"
